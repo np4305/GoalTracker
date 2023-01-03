@@ -2,6 +2,8 @@ package com.goaltracker;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.AttributeSet;
@@ -40,7 +42,19 @@ public class DaysDone extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        tableLayoutDaysDone = getView().findViewById(R.id.tableLayoutDaysDone);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_days_done, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        tableLayoutDaysDone = view.findViewById(R.id.tableLayoutDaysDone);
 
         gsonFormater = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
             @Override
@@ -66,15 +80,8 @@ public class DaysDone extends Fragment {
             row.addView(tw2);
 
             tableLayoutDaysDone.addView(row, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-
+            tableLayoutDaysDone.refreshDrawableState();
         });
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_days_done, container, false);
     }
 
     private void loadAllGoals() {
