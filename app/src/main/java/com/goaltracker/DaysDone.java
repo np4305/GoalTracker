@@ -80,7 +80,7 @@ public class DaysDone extends Fragment {
             row.addView(tw2);
 
             tableLayoutDaysDone.addView(row, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-            tableLayoutDaysDone.refreshDrawableState();
+            tableLayoutDaysDone.requestLayout();
         });
     }
 
