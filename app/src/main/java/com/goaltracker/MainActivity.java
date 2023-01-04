@@ -3,19 +3,13 @@ package com.goaltracker;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.goaltracker.ui.main.PageViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.goaltracker.ui.main.SectionsPagerAdapter;
 import com.goaltracker.databinding.ActivityMainBinding;

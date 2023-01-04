@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.goaltracker.DaysDone;
+import com.goaltracker.DaysLeft;
 import com.goaltracker.R;
 
 /**
@@ -25,10 +26,12 @@ public class SectionsPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        if (position == 0)
-            return new DaysDone();
-        else
-            return new DaysDone();
+        switch (position) {
+            case 0:
+                return new DaysDone();
+            case 1: return new DaysLeft();
+            default:return null;
+        }
     }
 
     @Override
