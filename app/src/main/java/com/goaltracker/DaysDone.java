@@ -1,5 +1,7 @@
 package com.goaltracker;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.goaltracker.Model.Goal;
 import com.goaltracker.Model.GoalRoot;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -65,12 +68,21 @@ public class DaysDone extends Fragment {
             row.addView(tw1);
 
             TextView tw2 = new TextView(getContext());
-            tw2.setText(goal.getStart());
+            tw2.setText(getDaysFromDate(goal));
 
             row.addView(tw2);
 
             tableLayoutDaysDone.addView(row, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
             tableLayoutDaysDone.requestLayout();
         });
+    }
+
+    private String getDaysFromDate(Goal date)
+    {
+        LocalDateTime date1 = LocalDateTime.parse(date.getStart(), Goal.customFormat);
+        LocalDateTime now = LocalDateTime.now();
+
+       return Long.toString(DAYS.between(date1,now));
+
     }
 }

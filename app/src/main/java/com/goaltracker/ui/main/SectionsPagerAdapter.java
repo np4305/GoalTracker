@@ -15,10 +15,6 @@ import com.goaltracker.R;
  * one of the sections/tabs/pages.
  */
 public class SectionsPagerAdapter extends FragmentStateAdapter {
-
-    @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
-
     public SectionsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -29,8 +25,10 @@ public class SectionsPagerAdapter extends FragmentStateAdapter {
         switch (position) {
             case 0:
                 return new DaysDone();
-            case 1: return new DaysLeft();
-            default:return null;
+            case 1:
+                return new DaysLeft();
+            default:
+                return null;
         }
     }
 

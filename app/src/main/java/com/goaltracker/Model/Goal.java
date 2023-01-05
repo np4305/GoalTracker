@@ -8,9 +8,9 @@ import java.time.format.DateTimeFormatter;
 public class Goal {
 
     @Expose(serialize = false, deserialize = false)
-    private final DateTimeFormatter customFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static final DateTimeFormatter customFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-   private final String name;
+    private final String name;
     private final String start;
     private final String end;
 
