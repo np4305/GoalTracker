@@ -2,6 +2,7 @@ package com.goaltracker;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.goaltracker.Model.Goal;
 import com.goaltracker.Model.GoalRoot;
@@ -33,11 +37,12 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DaysDone extends Fragment {
 
     GoalRoot goals;
-    TableLayout tableLayoutDaysDone;
+    LinearLayout viewDaysDone;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,8 +50,7 @@ public class DaysDone extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_days_done, container, false);
     }
@@ -54,35 +58,71 @@ public class DaysDone extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tableLayoutDaysDone = view.findViewById(R.id.tableLayoutDaysDone);
 
-        goals = FileOperations.getGoalRoot();
+        viewDaysDone = view.findViewById(R.id.viewDaysDone);
 
+        drawGoals();
+    }
+
+    private void drawGoals() {
+        goals = FileOperations.getGoalRoot(); //get all goals
+
+        viewDaysDone.removeAllViews(); //remove all goals from viewDaysDone
+
+        View header = LayoutInflater.from(getContext()).inflate(R.layout.table_layout, viewDaysDone, false);
+
+        TextView goalName = header.findViewById(R.id.textViewNameOfGoal);
+        goalName.setText("Goal name");
+        goalName.setTextColor(Color.CYAN);
+
+        TextView goalDays = header.findViewById(R.id.textViewNumberOfDays);
+        goalDays.setText("Days from");
+        goalDays.setTextColor(Color.CYAN);
+
+        header.findViewById(R.id.table_layout_delete).setVisibility(View.GONE);
+        viewDaysDone.addView(header);
+
+        //go through every goal
         goals.getGoals().forEach(goal -> {
-            TableRow row = new TableRow(getContext());
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
-            TextView tw1 = new TextView(getContext());
-            tw1.setText(goal.getName());
+            //We prepare new row to set the data
+            View oneRow = LayoutInflater.from(getContext()).inflate(R.layout.table_layout, viewDaysDone, false);
 
-            row.addView(tw1);
+            //Set the goal name
+            ((TextView) oneRow.findViewById(R.id.textViewNameOfGoal)).setText(goal.getName());
 
-            TextView tw2 = new TextView(getContext());
-            tw2.setText(getDaysFromDate(goal));
+            //Set the days passed
+            ((TextView) oneRow.findViewById(R.id.textViewNumberOfDays)).setText(getDaysFromDate(goal.getStart()));
 
-            row.addView(tw2);
+            //Set on trash can click
+            oneRow.findViewById(R.id.table_layout_delete).setOnClickListener(View -> {
+                //If deleting from array is a success
+                if (goals.getGoals().remove(goal)) {
+                    FileOperations.saveGoalRoot(goals); //delete from array
 
-            tableLayoutDaysDone.addView(row, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-            tableLayoutDaysDone.requestLayout();
+                    //Notify user, that the Goal was deleted
+                    Toast.makeText(getContext(), getString(R.string.goalRemovedSuccess), Toast.LENGTH_SHORT).show();
+
+                    //redraw all goals
+                    drawGoals();
+                }
+            });
+
+            viewDaysDone.addView(oneRow); //add to view
+            viewDaysDone.requestLayout(); //redraw the layout
         });
     }
 
-    private String getDaysFromDate(Goal date)
-    {
-        LocalDateTime date1 = LocalDateTime.parse(date.getStart(), Goal.customFormat);
-        LocalDateTime now = LocalDateTime.now();
+    private String getDaysFromDate(String date) {
+        try {
+            LocalDateTime date1 = LocalDateTime.parse(date, Goal.customFormat); //Get date of Goal
+            LocalDateTime now = LocalDateTime.now(); //Get current date
 
-       return Long.toString(DAYS.between(date1,now));
+            return Long.toString(DAYS.between(date1, now)); //return number between dates
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
+        return null;
     }
 }

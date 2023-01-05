@@ -5,10 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".DaysDone">
 
-    <TableLayout
-        android:id="@+id/tableLayoutDaysDone"
+    <LinearLayout
+        android:id="@+id/viewDaysDone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </TableLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"></LinearLayout>
 </FrameLayout>

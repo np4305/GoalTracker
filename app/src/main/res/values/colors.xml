@@ -7,4 +7,5 @@
     <color name="blue_secondary_dark">#20526C</color>
     <color name="black">#151515</color>
     <color name="white">#F1FEFF</color>
+    <color name="ic_color">#F1FEFF</color>
 </resources>

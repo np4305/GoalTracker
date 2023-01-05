@@ -20,7 +20,6 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-
     public static final String GOAL_DIR_NAME = "goals";
     public static final String GOAL_DATABASE = "goals.json";
     public static final String TAG = "GoalTraker";
@@ -35,20 +34,23 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //Some code for tabs
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this);
         ViewPager2 viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;
-        new TabLayoutMediator(tabs, viewPager, (tab, position) ->tab.setText(String.valueOf(position ==0 ? getString(R.string.tab_text_1) : getString(R.string.tab_text_2)))).attach();
+        new TabLayoutMediator(tabs, viewPager, (tab, position) -> tab.setText(String.valueOf(position == 0 ? getString(R.string.tab_text_1) : getString(R.string.tab_text_2)))).attach();
 
+        //Adds the button
         FloatingActionButton add = binding.add;
 
         add.setOnClickListener(view -> {
-            Intent i  =new Intent(getBaseContext(), EventInsert.class);
+            Intent i = new Intent(getBaseContext(), EventInsert.class);
             startActivity(i);
         });
 
-       GOAL_DIR = new File(getFilesDir(), GOAL_DIR_NAME);
+        //Creates the directory and file if it does not exists
+        GOAL_DIR = new File(getFilesDir(), GOAL_DIR_NAME);
         if (!GOAL_DIR.exists()) {
             Log.d(TAG, "GOAL_DIR does not exists. Creating it.");
             GOAL_DIR.mkdirs();
