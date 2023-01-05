@@ -35,8 +35,6 @@ public class EventInsert extends AppCompatActivity {
 
     GoalRoot goals;
 
-    Gson gsonFormater;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +43,7 @@ public class EventInsert extends AppCompatActivity {
         buttonCreateEvent = findViewById(R.id.buttonCreate);
         editTextEventName = findViewById(R.id.editTextEventName);
 
-        buttonCreateEvent.setOnClickListener(Vew ->{
+        buttonCreateEvent.setOnClickListener(Vew -> {
             String name = editTextEventName.getText().toString();
             LocalDateTime date = LocalDateTime.now();
 
@@ -53,49 +51,15 @@ public class EventInsert extends AppCompatActivity {
 
             goals.getGoals().add(g);
 
-            saveAllGoals();
+            if (FileOperations.saveGoalRoot(goals)) {
+                Toast.makeText(this, "Goal was created!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Goal was not created!", Toast.LENGTH_SHORT).show();
+            }
 
-            Toast.makeText(this, "Goal was created!", Toast.LENGTH_SHORT).show();
             finish();
-
         });
 
-        gsonFormater = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-            @Override
-            public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
-            }
-        }).create();
-
-        loadAllGoals();
-
+        goals = FileOperations.getGoalRoot();
     }
-
-    private void loadAllGoals() {
-        try {
-            FileInputStream fis = new FileInputStream(new File(MainActivity.GOAL_DIR, MainActivity.GOAL_DATABASE));
-            InputStreamReader br = new InputStreamReader(new BufferedInputStream(fis));
-
-            //if root is empty, then we create an empty root
-            goals = gsonFormater.fromJson(br, GoalRoot.class);
-            if (goals == null) {
-                Log.d(MainActivity.TAG, "root in SaveFile is empty. Creating empty root.");
-                goals = new GoalRoot();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void saveAllGoals() {
-        try {
-            Writer w = new FileWriter(new File(MainActivity.GOAL_DIR, MainActivity.GOAL_DATABASE), false);
-            gsonFormater.toJson(goals, w);
-            w.flush();
-            w.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }

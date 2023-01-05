@@ -8,11 +8,11 @@ import java.time.format.DateTimeFormatter;
 public class Goal {
 
     @Expose(serialize = false, deserialize = false)
-    private DateTimeFormatter customFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final DateTimeFormatter customFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-   private String name;
-    private String start;
-    private String end;
+   private final String name;
+    private final String start;
+    private final String end;
 
     public Goal(String name, LocalDateTime start) {
         this.name = name;

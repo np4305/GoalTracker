@@ -34,14 +34,11 @@ import java.time.ZonedDateTime;
 public class DaysDone extends Fragment {
 
     GoalRoot goals;
-    Gson gsonFormater;
-
     TableLayout tableLayoutDaysDone;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -56,14 +53,7 @@ public class DaysDone extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         tableLayoutDaysDone = view.findViewById(R.id.tableLayoutDaysDone);
 
-        gsonFormater = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-            @Override
-            public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
-            }
-        }).create();
-
-        loadAllGoals();
+        goals = FileOperations.getGoalRoot();
 
         goals.getGoals().forEach(goal -> {
             TableRow row = new TableRow(getContext());
@@ -82,21 +72,5 @@ public class DaysDone extends Fragment {
             tableLayoutDaysDone.addView(row, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
             tableLayoutDaysDone.requestLayout();
         });
-    }
-
-    private void loadAllGoals() {
-        try {
-            FileInputStream fis = new FileInputStream(new File(MainActivity.GOAL_DIR, MainActivity.GOAL_DATABASE));
-            InputStreamReader br = new InputStreamReader(new BufferedInputStream(fis));
-
-            //if root is empty, then we create an empty root
-            goals = gsonFormater.fromJson(br, GoalRoot.class);
-            if (goals == null) {
-                Log.d(MainActivity.TAG, "root in SaveFile is empty. Creating empty root.");
-                goals = new GoalRoot();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
