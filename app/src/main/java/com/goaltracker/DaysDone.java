@@ -71,6 +71,8 @@ public class DaysDone extends Fragment {
 
         //go through every goal
         goals.getGoals().forEach(goal -> {
+            if (goal.hasAnEnd())
+                return;
 
             //We prepare new row to set the data
             View oneRow = LayoutInflater.from(getContext()).inflate(R.layout.table_layout, viewDaysDone, false);
@@ -97,6 +99,7 @@ public class DaysDone extends Fragment {
 
             viewDaysDone.addView(oneRow); //add to view
             viewDaysDone.requestLayout(); //redraw the layout
+
         });
     }
 

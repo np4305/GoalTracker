@@ -10,6 +10,9 @@ public class Goal {
     @Expose(serialize = false, deserialize = false)
     public static final DateTimeFormatter customFormat = DateTimeFormatter.ISO_DATE_TIME;
 
+    @Expose(serialize = false, deserialize = false)
+    private boolean endIsSet = false;
+
     private final String name;
     private final String start;
     private final String end;
@@ -24,6 +27,7 @@ public class Goal {
         this.name = name;
         this.start = start.format(customFormat);
         this.end = end.format(customFormat);
+        this.endIsSet = true;
     }
 
     public String getName() {
@@ -36,5 +40,9 @@ public class Goal {
 
     public String getEnd() {
         return end;
+    }
+
+    public boolean hasAnEnd() {
+        return endIsSet;
     }
 }

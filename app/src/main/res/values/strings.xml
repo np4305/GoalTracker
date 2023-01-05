@@ -2,9 +2,7 @@
     <string name="app_name">GoalTracker</string>
     <string name="tab_text_1">Days Done</string>
     <string name="tab_text_2">Days Left</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="goalRemovedSuccess">Odstranjeno!</string>
     <string name="goalNameLabel">Goal name</string>
-    <string name="goalDaysLabel">Days from</string>
+    <string name="goalDaysLabel">Days</string>
 </resources>
