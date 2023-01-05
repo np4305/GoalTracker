@@ -4,40 +4,21 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.goaltracker.Model.Goal;
 import com.goaltracker.Model.GoalRoot;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class DaysDone extends Fragment {
 
@@ -72,11 +53,11 @@ public class DaysDone extends Fragment {
         View header = LayoutInflater.from(getContext()).inflate(R.layout.table_layout, viewDaysDone, false);
 
         TextView goalName = header.findViewById(R.id.textViewNameOfGoal);
-        goalName.setText("Goal name");
+        goalName.setText(R.string.goalNameLabel);
         goalName.setTextColor(Color.CYAN);
 
         TextView goalDays = header.findViewById(R.id.textViewNumberOfDays);
-        goalDays.setText("Days from");
+        goalDays.setText(R.string.goalDaysLabel);
         goalDays.setTextColor(Color.CYAN);
 
         header.findViewById(R.id.table_layout_delete).setVisibility(View.GONE);

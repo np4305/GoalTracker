@@ -24,14 +24,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String GOAL_DATABASE = "goals.json";
     public static final String TAG = "GoalTraker";
 
-    private ActivityMainBinding binding;
     public static File GOAL_DIR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         //Some code for tabs

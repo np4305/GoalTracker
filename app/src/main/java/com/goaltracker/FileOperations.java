@@ -2,14 +2,10 @@ package com.goaltracker;
 
 import android.util.Log;
 
-import com.goaltracker.Model.Goal;
 import com.goaltracker.Model.GoalRoot;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -17,7 +13,6 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.Writer;
-import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
