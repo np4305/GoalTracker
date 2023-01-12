@@ -2,7 +2,8 @@
     <string name="app_name">GoalTracker</string>
     <string name="tab_text_1">Days Done</string>
     <string name="tab_text_2">Days Left</string>
-    <string name="goalRemovedSuccess">Odstranjeno!</string>
+    <string name="goalRemovedSuccess">Removed!</string>
     <string name="goalNameLabel">Goal name</string>
     <string name="goalDaysLabel">Days</string>
+    <string name="eventCantBeCreated">Name can\'t be empty!</string>
 </resources>
